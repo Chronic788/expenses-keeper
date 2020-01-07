@@ -3,7 +3,62 @@ import os.path
 from os import path
 
 def addAnExpense():
-    pass
+    
+    print("You have chosen to add an expense...\n")
+
+    categories_file_name = "expense-categories.txt"
+    categories_file = open(categories_file_name, "r+")
+    categories = categories_file.readlines()
+
+    if len(categories) == 0:
+        categories_file.close()
+        viewCategories()
+        categories_file.open()
+
+    while True:
+
+        date = input("Enter the expense date:")
+        description = input("What was the expense for?")
+        amount = input("How much was the expense?")
+        amount = amount.replace("$", "")
+        print("Select the category of the expense:")
+        index = 1
+        for c in categories:
+            print(index + ". " + c)
+            index = index + 1
+        category_index = input("")
+        category = categories[category_index - 1]
+
+        print("Here is your expense summary:")
+        print("Date: " + date)
+        print("Description: " + description)
+        print("Amount: " + amount)
+        print("Category: " + category)
+        
+        record = input("\nRecord this expense?\n1 = Yes\n2 = No\n\n")
+        if record == "1":
+            
+            expense = date + "," + description + "," + amount
+
+            for i in range(int(category_index) - 1):
+                expense = expense + ","
+            for i in range(len(categories) - int(category_index) - 1):
+                expense = expense + ","
+
+            # Write out expense here. include and manage header
+
+            print("Expense recorded...")
+        else:
+            print("Expense not recorded...")
+            categories_file.close()
+            return
+
+        option = input("\nWould you like to add another expense?\n1 = Yes\n2 = No\n")
+        if option == "2":
+            break
+
+    categories_file.close()
+
 
 def viewExpenses():
     pass
@@ -39,12 +94,7 @@ def viewCategories():
             else:
                 break
     print()
-    
     categories_file.close()
-
-    add = input("Add an expense?\n1 = Yes\n2 = No\n")
-    if add == "1":
-        addAnExpense()
 
 def main():
 
