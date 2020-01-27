@@ -1,33 +1,62 @@
+# Expenses Keeper.py
+# ----------------------------------------------------------------------------------------------------------------------
+# Jared Nelsen - Jan 2020
+# ----------------------------------------------------------------------------------------------------------------------
+# This simple python script is a tool to help keep track of expenses. I needed a way to quickly categorize and add
+# expenses so I wrote this. I tried to be as explicit and clear as I could as I intend to use this as a learning tool
+# for new programmers.
+#
+#   The format of the expenses file is:
+#
+#       Header Line : In the format: Date, Description, Category 1, Category 2, Category ..., Category N
+#       Expense 1   : Amount lies in some category
+#       Expense 2   : Amount lies in some category
+#       Expense ... : Amount lies in some category
+#       Expense N   : Amount lies in some category
+#
+#       An example of a file might look like:
+#
+#       Date	Description	           Income	Rent	Utilities	Gas	Cars	Healthcare	Shopping	Clothing	Groceries	Eating Out          	Entertainment	Travel	Business	Fees
+#       01/01/19	Delta Baggage Fee													                                                                                 30		
+#       01/01/19	Steam Game												                                                                            37.5			
+#       01/02/19	Credit Card Interest															                                                                                       89.2
+#       01/02/19	Fast food											                                                        5.45				
+#       01/02/19	Groceries										                                                 140.85					
+#       01/02/19	Spotify												                                                                                9.99			
+#       01/03/19	Chick Fil A											                                                         8.8				
 
 import os.path
 from os import path
 
-# Got write out correct
-# Last thing is to write logic to add category to header if does not exist
-
 def addAnExpense():
     
+    # Introduction
     print("\nYou have chosen to add an expense...\n")
 
+    # Name the categories file
     categories_file_name = "expense-categories.txt"
+    # Check to see if the categories file exits and create it if it does not
     if not os.path.exists(categories_file_name):
-        print("Categories file does not exist! Create it by adding a category in the main menu.\n")
+        print("Categories file does not exist! Make sure to add catagories by adding a line to the categories file!")
+        with open(categories_file_name, "w"):
+            pass
+        print("\nCreated empty categories file in this directory called expense-categories.txt...")
         return
 
+    # Open the categories file in write mode and read in the lines
     categories_file = open(categories_file_name, "r+")
     categories = categories_file.readlines()
 
-    if len(categories) == 0:
-        categories_file.close()
-        viewCategories()
-        categories_file.open()
-
+    # Forever
     while True:
 
+        # Ask the user for input
         date = input("Enter the expense date: ")
         description = input("What was the expense for? ")
         amount = input("How much was the expense? ")
         amount = amount.replace("$", "")
+
+        # Select the category of the expense
         print("\nSelect the category of the expense: ")
         index = 1
         for c in categories:
@@ -36,55 +65,82 @@ def addAnExpense():
         category_index = input("")
         category = categories[int(category_index) - 1]
 
+        # Summarize the expense
         print("\nHere is your expense summary:")
         print(" Date: " + date)
         print(" Description: " + description)
         print(" Amount: " + amount)
         print(" Category: " + category)
         
+        # Ask whether to record the expense
         record = input("\nRecord this expense?\n1 = Yes\n2 = No\n\n")
         if record == "1":
             
+            # Begin the expense line to be written
             expense = date + "," + description
 
+            # Add in the expense amount in the correct place in the string of commas
             for i in range(int(category_index)):
                 expense = expense + ","
             expense = expense + amount
             for i in range(len(categories) - int(category_index)):
                 expense = expense + ","
 
+            # Name the expenses file
             expense_file_name = "expenses.csv"
+            # Create the expenses file if it does not exist
             if not path.exists(expense_file_name):
-                temp_file = open(expense_file_name, "w")
-                temp_file.close()
+                with open(expense_file_name, "w"):
+                    pass
+            # Open the expense file and read in the lines
             expense_file = open(expense_file_name, "r+")
             expense_lines = expense_file.readlines()
 
+            # Define a list to add the expense line to (We must do this because of the way the writelines function works)
             expense_write_lines = []
 
-            # Write out header
-            just_wrote_header = False
+            # Test to see if the header line exists and include it to write if not
+            have_to_write_header = False
+            # If the expense file is empty we have to write the header
             if len(expense_lines) == 0:
-                categories_line = "Date,Description,"
-                for i in range(len(categories)):
-                    categories_line = categories_line + categories[i].strip("\n")
-                    categories_line = categories_line + ","
-                categories_line = categories_line + "\n"
-                expense_write_lines.append(categories_line)
-                just_wrote_header = True
+                have_to_write_header = True
+            if len(expense_lines) > 0:
+                # Pick the first line in the expenses file
+                first_line_in_expenses_file = expense_lines[0]
+                # Pick the first category
+                first_category = categories[0]
+                # If a category is not in the first line we have to write the header
+                if not first_category in first_line_in_expenses_file:
+                    print("First not in")
+                    print("First line: " + first_line_in_expenses_file)
+                    print("First category: " + first_category)
+                    have_to_write_header = True
+            
+            # Add the header to the list of lines to write out if we have to
+            if have_to_write_header:
+                # Add the beginning of the header string
+                header = "Date,Description,"
+                # Append all of the categories to the end of the header string
+                for c in categories:
+                    header = header + c.strip("\n") + ","
+                # Append new line to the end of the header
+                header = header + "\n"
+                # Actually add the header to the list
+                expense_write_lines.append(header)
 
-
-
+            # Write the expense lines and make sure to append new lines
             expense_write_lines.append(expense)
             expense_write_lines.append("\n")
-
             expense_file.writelines(expense_write_lines)
 
+            # Close the expense file
             expense_file.close()
 
-            print("Expense recorded...")
+            print("\nExpense recorded...")
+        # If the user chose not to record the expense
         else:
-            print("Expense not recorded...")
+            print("\nExpense not recorded...")
+            # Close the file and quit
             categories_file.close()
             return
 
@@ -94,63 +150,25 @@ def addAnExpense():
 
     categories_file.close()
 
-def viewCategories():
-
-    # Name the file
-    categories_file_name = "expense-categories.txt"
-
-    if not path.exists(categories_file_name):
-        tempFile = open(categories_file_name, "w")
-        tempFile.close()
-
-    categories_file = open(categories_file_name, "r+")
-    categories = categories_file.readlines()
-
-    # Print the categories
-    print()
-    if len(categories) == 0:
-        print("You have no categories! Make sure to add one!\n")
-    else:
-        print("Here are your categories:")
-        index = 1
-        for category in categories:
-            print(str(index) + ". " + category.strip("\n"))
-            index = index + 1
-        print()
-
-    option = input("Would you like to add a Category?\n1 = Yes\n2 = No\n")
-    if option == "1":
-        while True:
-            new_category = []
-            new_category.append(input("\nWhat Category would you like to add?\n") + "\n")
-            categories_file.writelines(new_category)
-            print("\nCategory added...\n")
-            another = input("Add another?\n1 = Yes\n2 = No\n")
-            if another == "1":
-                continue
-            else:
-                break
-    print()
-    categories_file.close()
-
+# This is the main function
 def main():
 
+    # Welcome
     print("\nWelcome to your Expenses Keeper!")
 
+    # Forever
     while True:
+        # Give the user options
         print()
         print("Choose an option:")
         print("1. Add an expense")
-        print("2. View and add Categories")
-        print("3. Exit")
-
+        print("2. Exit")
         option = input("")
-
+        # Branch out. I implemented it this way in order to add new options in the future
         if option == "1":
             addAnExpense()
         elif option == "2":
-            viewCategories()
-        elif option == "3":
+            # Exit
             print("\nExiting Expenses Keeper...\n")
             break
 
