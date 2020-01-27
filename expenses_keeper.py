@@ -31,7 +31,7 @@ def addAnExpense():
         print("\nSelect the category of the expense: ")
         index = 1
         for c in categories:
-            print(str(index) + ". " + c)
+            print(str(index) + ". " + c.strip("\n"))
             index = index + 1
         category_index = input("")
         category = categories[int(category_index) - 1]
@@ -54,12 +54,16 @@ def addAnExpense():
                 expense = expense + ","
 
             expense_file_name = "expenses.csv"
+            if not path.exists(expense_file_name):
+                temp_file = open(expense_file_name, "w")
+                temp_file.close()
             expense_file = open(expense_file_name, "r+")
             expense_lines = expense_file.readlines()
 
             expense_write_lines = []
 
             # Write out header
+            just_wrote_header = False
             if len(expense_lines) == 0:
                 categories_line = "Date,Description,"
                 for i in range(len(categories)):
@@ -67,6 +71,9 @@ def addAnExpense():
                     categories_line = categories_line + ","
                 categories_line = categories_line + "\n"
                 expense_write_lines.append(categories_line)
+                just_wrote_header = True
+
+
 
             expense_write_lines.append(expense)
             expense_write_lines.append("\n")
@@ -86,10 +93,6 @@ def addAnExpense():
             break
 
     categories_file.close()
-
-
-def viewExpenses():
-    pass
 
 def viewCategories():
 
@@ -138,19 +141,16 @@ def main():
         print()
         print("Choose an option:")
         print("1. Add an expense")
-        print("2. View Expenses")
-        print("3. View and add Categories")
-        print("4. Exit")
+        print("2. View and add Categories")
+        print("3. Exit")
 
         option = input("")
 
         if option == "1":
             addAnExpense()
         elif option == "2":
-            viewExpenses()
-        elif option == "3":
             viewCategories()
-        elif option == "4":
+        elif option == "3":
             print("\nExiting Expenses Keeper...\n")
             break
 
