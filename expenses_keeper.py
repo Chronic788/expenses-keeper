@@ -2,6 +2,9 @@
 import os.path
 from os import path
 
+# Got write out correct
+# Last thing is to write logic to add category to header if does not exist
+
 def addAnExpense():
     
     print("\nYou have chosen to add an expense...\n")
@@ -25,7 +28,7 @@ def addAnExpense():
         description = input("What was the expense for? ")
         amount = input("How much was the expense? ")
         amount = amount.replace("$", "")
-        print("Select the category of the expense: ")
+        print("\nSelect the category of the expense: ")
         index = 1
         for c in categories:
             print(str(index) + ". " + c)
@@ -42,22 +45,23 @@ def addAnExpense():
         record = input("\nRecord this expense?\n1 = Yes\n2 = No\n\n")
         if record == "1":
             
-            expense = date + "," + description + "," + amount
+            expense = date + "," + description
 
-            for i in range(int(category_index) - 1):
+            for i in range(int(category_index)):
                 expense = expense + ","
-            for i in range(len(categories) - int(category_index) - 1):
+            expense = expense + amount
+            for i in range(len(categories) - int(category_index)):
                 expense = expense + ","
 
             expense_file_name = "expenses.csv"
-            expense_file = open(expense_file_name, "w+")
+            expense_file = open(expense_file_name, "r+")
             expense_lines = expense_file.readlines()
 
             expense_write_lines = []
 
             # Write out header
             if len(expense_lines) == 0:
-                categories_line = "Date,Description,Amount,"
+                categories_line = "Date,Description,"
                 for i in range(len(categories)):
                     categories_line = categories_line + categories[i].strip("\n")
                     categories_line = categories_line + ","
@@ -65,6 +69,7 @@ def addAnExpense():
                 expense_write_lines.append(categories_line)
 
             expense_write_lines.append(expense)
+            expense_write_lines.append("\n")
 
             expense_file.writelines(expense_write_lines)
 
@@ -91,7 +96,11 @@ def viewCategories():
     # Name the file
     categories_file_name = "expense-categories.txt"
 
-    categories_file = open(categories_file_name, "w+")
+    if not path.exists(categories_file_name):
+        tempFile = open(categories_file_name, "w")
+        tempFile.close()
+
+    categories_file = open(categories_file_name, "r+")
     categories = categories_file.readlines()
 
     # Print the categories
@@ -102,7 +111,7 @@ def viewCategories():
         print("Here are your categories:")
         index = 1
         for category in categories:
-            print(str(index) + ". " + category)
+            print(str(index) + ". " + category.strip("\n"))
             index = index + 1
         print()
 
