@@ -2,9 +2,6 @@
 import os.path
 from os import path
 
-# When I try to select the category when adding an expense it reads it off one line.
-# I need to figure out how to write the categories on separate lines
-
 def addAnExpense():
     
     print("\nYou have chosen to add an expense...\n")
@@ -62,7 +59,7 @@ def addAnExpense():
             if len(expense_lines) == 0:
                 categories_line = "Date,Description,Amount,"
                 for i in range(len(categories)):
-                    categories_line = categories_line + categories[i]
+                    categories_line = categories_line + categories[i].strip("\n")
                     categories_line = categories_line + ","
                 categories_line = categories_line + "\n"
                 expense_write_lines.append(categories_line)
@@ -113,7 +110,7 @@ def viewCategories():
     if option == "1":
         while True:
             new_category = []
-            new_category.append(input("\nWhat Category would you like to add?\n"))
+            new_category.append(input("\nWhat Category would you like to add?\n") + "\n")
             categories_file.writelines(new_category)
             print("\nCategory added...\n")
             another = input("Add another?\n1 = Yes\n2 = No\n")
