@@ -94,7 +94,7 @@ def viewCategories():
     # Name the file
     categories_file_name = "expense-categories.txt"
 
-    categories_file = open(categories_file_name, "r+")
+    categories_file = open(categories_file_name, "w+")
     categories = categories_file.readlines()
 
     # Print the categories
