@@ -24,10 +24,15 @@
 #       01/02/19	Groceries										                                                 140.85					
 #       01/02/19	Spotify												                                                                                9.99			
 #       01/03/19	Chick Fil A											                                                         8.8				
+# 
+# Recall that Python is interpreted. This means that each time a file is read, functions that are used must be already defined. For this script, this simply means that the file should be
+# read from bottom to top to understand it best.
 
+# Imports
 import os.path
 from os import path
 
+# This function adds an expense to the expenses file. This is the core functionality of the program.
 def addAnExpense():
     
     # Introduction
@@ -104,6 +109,7 @@ def addAnExpense():
             # If the expense file is empty we have to write the header
             if len(expense_lines) == 0:
                 have_to_write_header = True
+            # If the expense file has something in it we have to do some more through checks
             if len(expense_lines) > 0:
                 # Pick the first line in the expenses file
                 first_line_in_expenses_file = expense_lines[0]
@@ -167,7 +173,7 @@ def main():
         # Branch out. I implemented it this way in order to add new options in the future
         if option == "1":
             addAnExpense()
-        elif option == "2":
+        else:
             # Exit
             print("\nExiting Expenses Keeper...\n")
             break
