@@ -1,10 +1,14 @@
-toot
-bloop
-soup
-loop
-roop
-koop
-goop
-ill
-noop
-hello
+Income
+Rent
+Utilities
+Gas
+Cars
+Healthcare
+Shopping
+Clothing
+Groceries
+Eating out / Alcohol
+Entertainment
+Travel
+Business
+Fees
