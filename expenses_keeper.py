@@ -116,17 +116,18 @@ def addAnExpense():
             # If the expense file is empty we have to write the header
             if len(expense_lines) == 0:
                 have_to_write_header = True
-            # If the expense file has something in it we have to do some more through checks
+            # If the expense file has something in it we have to do some more thorough checks
             if len(expense_lines) > 0:
                 # Pick the first line in the expenses file
                 first_line_in_expenses_file = expense_lines[0]
                 # Pick the first category
-                first_category = categories[0]
+                first_category = categories[0].strip("\n")
                 # If a category is not in the first line we have to write the header
                 if not first_category in first_line_in_expenses_file:
                     print("First not in")
                     print("First line: " + first_line_in_expenses_file)
                     print("First category: " + first_category)
+                    print(first_category in first_line_in_expenses_file)
                     have_to_write_header = True
             
             # Add the header to the list of lines to write out if we have to
