@@ -52,6 +52,13 @@ def addAnExpense():
     categories_file = open(categories_file_name, "r+")
     categories = categories_file.readlines()
 
+    # Check to see if the file contains any categories and warn if it does not
+    if len(categories) == 0:
+        print("There are no categories in the categories file! Make sure to add one or more by manually editing the expense-categories.txt file in this directory.")
+        print("The categories file should be formatted with each category on a new line. There is no header in the file.")
+        print("\nExiting...")
+        return
+
     # Forever
     while True:
 
