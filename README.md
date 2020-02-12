@@ -4,7 +4,7 @@ Expenses Keeper is a simple tool to help keep track of one's expenses. Users can
 
 See expenses-file-screenshot.png in this repo to see an example of how the file will come out.
 
-This is useful because it is an easy way to see a running list of all of one's expenses in one place and be able to do some simple analysis on it.
+This tool is useful because it is an easy way to see a running list of all of one's expenses in one place and be able to do some simple analysis on it.
 
 ## Anatomy
 
@@ -27,3 +27,4 @@ To run Expenses Keeper, simply:
 
 This is obviously the bare minimum implementation of such a program. There are multiple things that could be added including category management and simple expense calculations like totaling. However, I've found it useful to keep track of my own expenses and maybe you will too!
 
+Enjoy!
