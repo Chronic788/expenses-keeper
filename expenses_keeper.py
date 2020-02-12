@@ -125,10 +125,6 @@ def addAnExpense():
                 first_category = categories[0].strip("\n")
                 # If a category is not in the first line we have to write the header
                 if not first_category in first_line_in_expenses_file:
-                    print("First not in")
-                    print("First line: " + first_line_in_expenses_file)
-                    print("First category: " + first_category)
-                    print(first_category in first_line_in_expenses_file)
                     have_to_write_header = True
             
             # Add the header to the list of lines to write out if we have to
