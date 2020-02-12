@@ -2,9 +2,7 @@
 
 Expenses Keeper is a simple tool to help keep track of one's expenses. Users can add an expense to a comma separated file to categorize them and keep track of them. I also intended it as a learning tool for new programmers.
 
-Here is an example of the end result of a file built with Expense Keeper:
-
-![Expenses Keeper File](/home/jared/Projects/expenses-keeper/expenses-file-screenshot.png?raw=True)
+See expenses-file-screenshot.png in this repo to see an example of how the file will come out.
 
 This is useful because it is an easy way to see a running list of all of one's expenses in one place and be able to do some simple analysis on it.
 
