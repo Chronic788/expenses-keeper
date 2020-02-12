@@ -16,17 +16,17 @@
 #
 #       An example of a file might look like:
 #
-#       Date	Description	           Income	Rent	Utilities	Gas	Cars	Healthcare	Shopping	Clothing	Groceries	Eating Out          	Entertainment	Travel	Business	Fees
-#       01/01/19	Delta Baggage Fee													                                                                                 30		
-#       01/01/19	Steam Game												                                                                            37.5			
-#       01/02/19	Credit Card Interest															                                                                                       89.2
-#       01/02/19	Fast food											                                                        5.45				
-#       01/02/19	Groceries										                                                 140.85					
-#       01/02/19	Spotify												                                                                                9.99			
-#       01/03/19	Chick Fil A											                                                         8.8				
+#       Date	Description	          Rent    	Groceries	Utilities	Gas	   Healthcare	Shopping	
+#       01/01/19	Doctor													   150.0                
+#       01/01/19	Rent			  1250.0								                          
+#       01/02/19	Electric								   55.0							          
+#       01/02/19	Gas										            10.0	                          
+#       01/02/19	Groceries					  120.58				                                  
+#       01/02/19	Clothing												                 23.0   													                               
 # 
-# Recall that Python is interpreted. This means that each time a file is read, functions that are used must be already defined. For this script, this simply means that the file should be
-# read from bottom to top to understand it best.
+# Recall that Python is interpreted. This means that each time a file is read, functions that are used must be
+# already defined. For this script, this simply means that the file should be read from bottom to top to 
+# understand it best.
 
 # Imports
 import os.path
@@ -54,7 +54,8 @@ def addAnExpense():
 
     # Check to see if the file contains any categories and warn if it does not
     if len(categories) == 0:
-        print("There are no categories in the categories file! Make sure to add one or more by manually editing the expense-categories.txt file in this directory.")
+        print("There are no categories in the categories file!")
+        print("Make sure to add one or more by manually editing the expense-categories.txt file in this directory.")
         print("The categories file should be formatted with each category on a new line.")
         print("\nExiting...")
         return
