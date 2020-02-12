@@ -4,7 +4,7 @@ Expenses Keeper is a simple tool to help keep track of one's expenses. Users can
 
 Here is an example of the end result of a file built with Expense Keeper:
 
-![Expenses Keeper File](/home/jared/Projects/expenses-keeper/expenses-file-screenshot.png)
+![Expenses Keeper File](../home/jared/Projects/expenses-keeper/expenses-file-screenshot.png)
 
 This is useful because it is an easy way to see a running list of all of one's expenses in one place and be able to do some simple analysis on it.
 
